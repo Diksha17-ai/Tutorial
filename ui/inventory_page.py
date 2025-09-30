@@ -59,15 +59,15 @@ class InventoryPage(tk.Frame):
         qty = self.new_qty_entry.get().strip()
         threshold = self.new_threshold_entry.get().strip()
 
-        if not item or not qty.isdigit() or not threshold.isdigit():
-            messagebox.showerror("Error", "Enter valid item name, quantity, and threshold")
+        if not item or not qty or not threshold.isdigit():   # qty can be varchar now
+            messagebox.showerror("Error", "Enter valid item name, quantity (text allowed), and numeric threshold")
             return
 
         con = connect()
         try:
             cur = con.cursor()
             cur.execute("INSERT INTO inventory (item, quantity, alert_threshold) VALUES (?, ?, ?)",
-                        (item, int(qty), int(threshold)))
+                        (item, qty, int(threshold)))   # qty saved as TEXT
             con.commit()
             messagebox.showinfo("Success", f"Item '{item}' added successfully!")
             self.load_inventory()
@@ -100,12 +100,20 @@ class InventoryPage(tk.Frame):
     def update_stock(self):
         item = self.item_entry.get().strip()
         qty = self.qty_entry.get().strip()
-        if not item or not qty.isdigit():
+        if not item or not qty:   # allow varchar qty
             messagebox.showerror("Invalid Input", "Enter valid item name and quantity.")
             return
-        update_inventory(item, int(qty))
+        update_inventory(item, qty)   # pass as TEXT
         self.load_inventory()
-        messagebox.showinfo("Updated", f"Updated {item} to {qty} units.")
+        messagebox.showinfo("Updated", f"Updated {item} to {qty}.")
+
+    def update_inventory(item, quantity):
+        con = connect()
+        cur = con.cursor()
+        cur.execute("UPDATE inventory SET quantity=? WHERE item=?", (quantity, item))  # quantity TEXT
+        con.commit()
+        con.close()
+
 
     def load_inventory(self):
         for item in self.tree.get_children():              # Clear table first
@@ -116,13 +124,14 @@ class InventoryPage(tk.Frame):
 
         for row in inventory:
             item, qty, threshold = row
-            alert = "LOW" if qty <= threshold else ""
-            if alert:
-                low_stock.append(item)
-            self.tree.insert("", "end", values=(item, qty, threshold, alert))
+            alert = "LOW" 
+            try:
+                if int(qty) <= threshold:     # only works if qty is numeric
+                    alert = "LOW"
+            except ValueError:
+                pass               # skip check if qty is non-numeric (like "5kg")
 
-        if low_stock:
-            messagebox.showwarning("Low Stock", f"Low stock: {', '.join(low_stock)}")
+            self.tree.insert("", "end", values=(item, qty, threshold, alert))
 
         
 
