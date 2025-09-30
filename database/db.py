@@ -21,7 +21,7 @@ def init_db():
         CREATE TABLE IF NOT EXISTS inventory (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             item TEXT UNIQUE NOT NULL,
-            quantity INTEGER NOT NULL DEFAULT 0,
+            quantity TEXT NOT NULL,
             alert_threshold INTEGER NOT NULL DEFAULT 0
         )
     """)      # Create inventory table                         
