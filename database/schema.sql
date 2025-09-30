@@ -22,6 +22,6 @@ CREATE TABLE IF NOT EXISTS sales (
 CREATE TABLE IF NOT EXISTS inventory (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     item TEXT,
-    quantity INTEGER,
+    quantity TEXT NOT NULL,
     alert_threshold INTEGER
 );
