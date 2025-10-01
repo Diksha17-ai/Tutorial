@@ -23,5 +23,5 @@ CREATE TABLE IF NOT EXISTS inventory (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     item TEXT,
     quantity TEXT NOT NULL,
-    alert_threshold INTEGER
+    alert_threshold TEXT NOT NULL
 );
