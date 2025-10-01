@@ -22,7 +22,7 @@ def init_db():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             item TEXT UNIQUE NOT NULL,
             quantity TEXT NOT NULL,
-            alert_threshold INTEGER NOT NULL DEFAULT 0
+            alert_threshold TEXT NOT NULL
         )
     """)      # Create inventory table                         
 
