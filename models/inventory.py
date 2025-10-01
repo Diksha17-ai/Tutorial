@@ -29,6 +29,16 @@ def update_inventory(item, quantity):
     con.commit()
     con.close()
 
+def update_threshold(item, threshold):
+    """
+    Update threshold, allows text with unit like '10kg'.
+    """
+    con = connect()
+    cur = con.cursor()
+    cur.execute("UPDATE inventory SET alert_threshold=? WHERE item=?", (threshold, item))
+    con.commit()
+    con.close()
+
 def delete_inventory(item):
     con = connect()
     cur = con.cursor()
