@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 from models.order import create_order
-from models.menu import get_menu  # Needed to fetch menu items
+from models.menu import get_menu 
 from ui.billing_page import BillingPage
 
 class OrderPage(tk.Frame):
@@ -81,7 +81,12 @@ class OrderPage(tk.Frame):
             self.menu_tree.delete(row)
         menu = get_menu()
         for itm in menu:
-            self.menu_tree.insert("", "end", values=itm)
+             # itm = (id, name, price, stock)
+            item_id, name, price, stock = itm
+            self.menu_tree.insert(
+                "", "end",
+                values=(item_id, name, f"₹{price:.2f}", stock)   # Show Rupee symbol
+            )
             self.sel_name.config(state='normal')
             self.sel_name.delete(0, tk.END)
             self.sel_name.config(state='readonly')
