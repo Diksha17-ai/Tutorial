@@ -1,0 +1,25 @@
+{
+  "name": "cafe-management-system",
+  "version": "1.0.0",
+  "description": "Python Tkinter + SQLite based Cafe Management System for menu, orders, billing, inventory, and sales tracking.",
+  "private": true,
+  "scripts": {
+    "start": "python main.py",
+    "lint": "echo \"No JS/TS lint configured\"",
+    "format": "echo \"Use black/isort for Python formatting\"",
+    "test": "echo \"No automated tests configured\""
+  },
+  "keywords": [
+    "python",
+    "tkinter",
+    "sqlite",
+    "desktop-app",
+    "cafe-management",
+    "inventory",
+    "billing"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}
